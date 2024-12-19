@@ -30,4 +30,4 @@ jobs:
             echo "No YAML files detected. Exiting."
             exit 0
           fi
-          echo "file=$CHANGED_FILE" >> $GITHUB_ENV
+          echo "file=$CHANGED_FILE" >> $GITHUB_ENV 
