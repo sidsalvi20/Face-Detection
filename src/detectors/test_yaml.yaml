@@ -1,6 +1,6 @@
 version: 2.6
 
-executors: # Define an executor
+executors: 
   my-executor:
     docker:
       - image: cimg/base:2024.01

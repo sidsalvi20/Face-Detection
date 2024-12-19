@@ -1,10 +1,10 @@
-name: Changes in YAML
+name: Changes in YAML (src/detectors Folder)
 
 on:
   pull_request:
     branches: [ "main" ]
     paths:
-      - "*.yaml" # Match YAML files in the root directory
+      - "src/detectors/*.yaml" # Match YAML files in src/detectors folder
   workflow_dispatch:
 
 jobs:
@@ -22,9 +22,9 @@ jobs:
       - name: Detect Modified File
         id: get-file
         run: |
-          CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '\.yaml$' || echo "")
+          CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '^src/detectors/.*\.yaml$' || echo "")
           if [ -z "$CHANGED_FILE" ]; then
-            echo "No YAML files detected. Exiting."
+            echo "No YAML files detected in src/detectors. Exiting."
             exit 0
           fi
           echo "file=$CHANGED_FILE" >> $GITHUB_ENV
