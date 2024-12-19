@@ -1,17 +1,12 @@
-# This is a basic workflow to help you get started with Actions
+name: Changes in YAML
 
-name: Changes in yaml
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   pull_request:
     branches: [ "main" ]
     paths:
-      - '/*.yaml'
-
-  # Allows you to run this workflow manually from the Actions tab
+      - "*.yaml" # Match YAML files in the root directory
   workflow_dispatch:
+
 jobs:
   pull_request_review:
     runs-on: ubuntu-latest
@@ -25,9 +20,11 @@ jobs:
       - name: Detect Modified File
         id: get-file
         run: |
-          CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '.*\.yaml' || echo "")
+          CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '\.yaml$' || echo "")
           if [ -z "$CHANGED_FILE" ]; then
             echo "No YAML files detected. Exiting."
             exit 0
           fi
-          echo "file=$CHANGED_FILE" >> $GITHUB_ENV 
+          echo "file=$CHANGED_FILE" >> $GITHUB_ENV
+      - name: Output Changed File
+        run: echo "Detected YAML file: ${{ env.file }}"
