@@ -26,5 +26,9 @@ jobs:
             exit 0
           fi
           echo "file=$CHANGED_FILE" >> $GITHUB_ENV
+
+      # Step 3: Output Changed File
       - name: Output Changed File
         run: echo "Detected YAML file: ${{ env.file }}"
+        env:
+          file: ${{ env.file }}
