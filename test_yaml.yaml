@@ -1,4 +1,4 @@
-version: 2.1
+version: 2.3
 
 executors: # Define an executor
   my-executor:
@@ -7,7 +7,7 @@ executors: # Define an executor
 # Define the jobs we want to run for this project
 jobs:
   build:
-    executor: my-executor
+    executor: my-executor1
     steps:
       - checkout
       - run: echo "build"
