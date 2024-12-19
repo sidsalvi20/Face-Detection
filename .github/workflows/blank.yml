@@ -25,7 +25,7 @@ jobs:
       - name: Detect Modified File
         id: get-file
         run: |
-          CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep 'configs/.*\.yaml' || echo "")
+          CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '.*\.yaml' || echo "")
           if [ -z "$CHANGED_FILE" ]; then
             echo "No YAML files detected. Exiting."
             exit 0
