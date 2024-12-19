@@ -16,11 +16,7 @@ jobs:
     steps:
       - checkout
       - run: echo "test"
-  deploy:
-    executor: my-executor3
-    steps:
-      - checkout
-      - run: echo "deploy"
+
 
 # Orchestrate our job run sequence
 workflows:
