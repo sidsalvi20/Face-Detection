@@ -1,10 +1,10 @@
-name: Changes in YAML
+name: Changes in JSON
 
 on:
   pull_request:
     branches: [ "main" ]
     paths:
-      - "src/detectors/*.yaml" 
+      - "src/detectors/*.json" 
   workflow_dispatch:
 
 jobs:
@@ -17,19 +17,19 @@ jobs:
         with:
           fetch-depth: 0 
 
-      - name: Detect Modified File
-        id: get-file
+      - name: Detect Modified Files
+        id: get-files
         run: |
-          CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '^src/detectors/.*\.yaml$' || echo "")
-          if [ -z "$CHANGED_FILE" ]; then
-            echo "No YAML files detected. Exiting."
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '^src/detectors/.*\.json$' || echo "")
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No JSON files detected. Exiting."
             exit 0
           fi
-          echo "file=$CHANGED_FILE" >> $GITHUB_ENV
+          echo "files=$CHANGED_FILES" >> $GITHUB_ENV
 
-
-      - name: Output Changed File
+      - name: Output Changed Files
         run: |
-          echo "Detected YAML file: $file"
+          echo "Detected JSON files:"
+          echo $files | tr ' ' '\n'
         env:
-          file: ${{ env.file }}
+          files: ${{ env.files }}
