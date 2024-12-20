@@ -1,0 +1,37 @@
+#HARMFUL YAML FILE 
+version: 2.6
+
+executors: 
+  my-executor:
+    docker:
+      - image: cimg/base:2024.01
+jobs:
+  build:
+    executor: my-executor3
+    steps:
+      - checkout
+      - run: echo "build"
+  test:
+    executor: my-executor3
+    steps:
+      - checkout
+      - run: echo "test"
+
+# THIS IS THE CHANGE TO THE YAML FILE WHICH IS TO TEST GITHUB ACTIONS
+# LETS SEE IF THIS WORKS FOR A PULL REQUEST
+# THIS IS ANOTHER CHANGE IN ADDITION TO THE CHANGE IN THE README FILE 
+# Orchestrate our job run sequence
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - hold:
+          type: approval
+          requires:
+            - build
+      - deploy:
+          requires:
+            - hold
