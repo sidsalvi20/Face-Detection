@@ -1,10 +1,10 @@
-name: Changes in jailbreak.yaml
+name: Changes in nsfw.yaml
 
 on:
   pull_request:
     branches: [ "main" ]
     paths:
-      - "src/detectors/jailbreak.yaml"
+      - "src/detectors/nsfw.yaml"
   workflow_dispatch:
 
 jobs:
@@ -20,9 +20,9 @@ jobs:
       - name: Detect Modified File
         id: get-file
         run: |
-          CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '^src/detectors/jailbreak\.yaml$' || echo "")
+          CHANGED_FILE=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }} | grep '^src/detectors/nsfw\.yaml$' || echo "")
           if [ -z "$CHANGED_FILE" ]; then
-            echo "No changes to jailbreak.yaml detected. Exiting."
+            echo "No changes to nsfw.yaml detected. Exiting."
             exit 0
           fi
           echo "file=$CHANGED_FILE" >> $GITHUB_ENV
